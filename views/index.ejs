@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulaire de Tâches</title>
+<style>
+   body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.x, .x2 {
+    text-align: center;
+    border-radius: 5px;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+}
+
+.x2 {
+    background-color: rgba(0, 0, 0, 0.56);
+    color: #fff;
+}
+
+.s, .t {
+    padding: 8px 15px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.s {
+    background-color: #a96300;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.t {
+    background-color: #00a968;
+    margin-left: 10px;
+    margin-right: auto;
+}
+
+.s:hover, .t:hover {
+    background-color: #6e4000;
+}
+
+footer {
+    background-color: #dad5d5;
+    color: #423e3e;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Ajouter une Tâche</h2>
+    <form method="post" action="http://localhost:1080/ajouter-tache">
+        <input type="text" id="task" name="task" placeholder="Entrez le nom de la tâche..." required>
+        <input type="submit" value="Ajouter la Tâche">
+    </form>
+</div>
+<div class="container">
+    <h2>Liste des Tâches En Cours</h2>
+    <div id="task-list">
+        <% if (tasks && tasks.length > 0) { %>
+            <% tasks.forEach(task => { %>
+                <div class="x"><%= task.name %>
+                    <form method="POST" action="/supprimer-tache/<%= task.idT %>">
+                        <button class="s" type="submit">Supprimer</button>
+                    </form>
+                    <form method="POST" action="/statu-tache/<%= task.idT %>">
+                        <button class="t" type="submit">Terminé</button>
+                    </form>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <center><p>Aucune tâche !</p></center>
+        <% } %>
+    </div>
+    <h2>Liste des Tâches Terminer</h2>
+    <div id="task-list">
+        <% if (tasks2 && tasks2.length > 0) { %>
+            <% tasks2.forEach(task2 => { %>
+                <div class="x2"><%= task2.name %></div>
+            <% }); %>
+        <% } else { %>
+            <center><p>Aucune tâche !</p></center>
+        <% } %>
+    </div>
+</div>
+<footer>
+    <p>Développé par Cyd - CYD Do Tasks &copy; <script>document.write(new Date().getFullYear())</script></p>
+</footer>
+
+</body>
+</html>
